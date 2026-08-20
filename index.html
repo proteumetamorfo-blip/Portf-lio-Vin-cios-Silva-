@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Vinícios Silva — Tecnologia, Automação e Segurança Digital</title>
+  <meta name="description" content="Portfólio profissional de Vinícios Silva — Técnico em Redes de Computadores, automação, análise de dados, programação e segurança digital."
+
+  <!-- Segurança: CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://api.github.com; frame-src 'none'; object-src 'none';" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: { DEFAULT: '#0a0908', deep: '#050403', mid: '#141210' },
+            gold:     { DEFAULT: '#c9a84c', light: '#e0c87a', dim: '#8a6f2e', pale: '#f0e4b8' },
+            marble:   { DEFAULT: '#f0ece4', pure: '#faf8f4' },
+          },
+          fontFamily: {
+            cinzel:    ['Cinzel', 'serif'],
+            cormorant: ['Cormorant Garamond', 'serif'],
+            mono:      ['JetBrains Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: #0a0908;
+      color: #f0ece4;
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+      min-height: 100dvh;
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #050403; }
+    ::-webkit-scrollbar-thumb { background: #8a6f2e; border-radius: 2px; }
+
+    /* ═══ FUNDO ═══ */
+    .bg-atm {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 15% 15%, rgba(201,168,76,0.05) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 50% at 85% 85%, rgba(139,26,26,0.06) 0%, transparent 100%);
+    }
+
+    /* ═══ GLASS ═══ */
+    .glass {
+      background: rgba(14,12,10,0.7);
+      backdrop-filter: blur(20px) saturate(1.5);
+      -webkit-backdrop-filter: blur(20px) saturate(1.5);
+      border: 1px solid rgba(201,168,76,0.18);
+    }
+
+    /* ═══ GOLD SHIMMER ═══ */
+    .gold-text {
+      background: linear-gradient(90deg, #8a6f2e, #e0c87a, #c9a84c, #f0e4b8, #c9a84c);
+      background-size: 300% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gShimmer 5s linear infinite;
+    }
+    @keyframes gShimmer { 0%{background-position:0%} 100%{background-position:300%} }
+
+    /* ═══ DIVIDER ═══ */
+    .divider { display:flex; align-items:center; gap:1rem; width:100%; }
+    .divider::before,.divider::after {
+      content:''; flex:1; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+    }
+
+    /* ═══ NAVBAR ═══ */
+    #navbar {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(5,4,3,0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(201,168,76,0.18);
+    }
+    .nav-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 1.25rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    @media(min-width:1024px){ .nav-wrap { height:72px; padding:0 3rem; } }
+
+    .nav-logo {
+      font-family:'Cinzel',serif; font-weight:900;
+      font-size: clamp(0.6rem, 2vw, 0.78rem);
+      letter-spacing:0.22em; text-decoration:none; white-space:nowrap;
+    }
+
+    /* Links desktop */
+    .nav-desktop { display:none; gap:2.5rem; align-items:center; }
+    @media(min-width:768px){ .nav-desktop { display:flex; } }
+    .nav-a {
+      font-family:'Cinzel',serif; font-size:0.63rem; letter-spacing:0.18em;
+      color:rgba(240,236,228,0.5); text-decoration:none; text-transform:uppercase;
+      position:relative; padding:0.5rem 0; white-space:nowrap;
+      transition: color 0.3s;
+    }
+    .nav-a::after {
+      content:''; position:absolute; bottom:0; left:0; right:0;
+      height:1px; background:#c9a84c;
+      transform:scaleX(0); transition:transform 0.3s;
+    }
+    .nav-a:hover { color:#c9a84c; }
+    .nav-a:hover::after { transform:scaleX(1); }
+
+    /* Hambúrguer */
+    .hbg {
+      display:flex; flex-direction:column; gap:5px;
+      width:44px; height:44px; align-items:center; justify-content:center;
+      background:none; border:none; cursor:pointer;
+    }
+    @media(min-width:768px){ .hbg { display:none; } }
+    .hbg span {
+      display:block; height:1.5px; background:rgba(201,168,76,0.6);
+      border-radius:1px; transition:all 0.35s ease;
+    }
+    .hbg span:nth-child(1){ width:22px; }
+    .hbg span:nth-child(2){ width:22px; }
+    .hbg span:nth-child(3){ width:14px; }
+    .hbg.open span:nth-child(1){ transform:rotate(45deg) translate(4.5px,4.5px); }
+    .hbg.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
+    .hbg.open span:nth-child(3){ transform:rotate(-45deg) translate(4.5px,-4.5px); width:22px; }
+
+    /* Menu mobile */
+    #mmenu {
+      display:none; position:absolute; top:100%; left:0; right:0;
+      background:rgba(5,4,3,0.97); backdrop-filter:blur(24px);
+      border-bottom:1px solid rgba(201,168,76,0.12); padding:0.5rem 0;
+    }
+    #mmenu.open { display:block; }
+    #mmenu a {
+      display:block; padding:1rem 1.5rem;
+      font-family:'Cinzel',serif; font-size:0.72rem; letter-spacing:0.2em;
+      text-transform:uppercase; color:rgba(240,236,228,0.5); text-decoration:none;
+      border-bottom:1px solid rgba(201,168,76,0.06); transition:color 0.2s, padding-left 0.2s;
+    }
+    #mmenu a:last-child { border-bottom:none; }
+    #mmenu a:hover { color:#c9a84c; padding-left:2rem; }
+
+    /* ═══ HERO ═══ */
+    #hero {
+      min-height: 100dvh;
+      display:flex; flex-direction:column;
+      justify-content:center; align-items:center;
+      text-align:center;
+      padding: 80px clamp(1.25rem,5vw,3rem) 4rem;
+      /* overflow:hidden garante que a imagem nunca ultrapasse a seção */
+      position:relative; overflow:hidden;
+      /* Templo clássico — gradiente desbota para preto puro na emenda */
+      background-image:
+        linear-gradient(to bottom, rgba(10,9,8,0.65) 0%, rgba(10,9,8,0.95) 85%, #0a0908 100%),
+        url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      /* center 30% → enquadra o templo no topo, funciona bem em mobile e desktop */
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      /* scroll = compatível com iOS Safari (fixed quebra em webkit mobile) */
+      background-attachment: scroll;
+    }
+
+    /* Ícone do card de monumento — transição suave no hover */
+    .mon-icon i {
+      transition: color 0.35s ease, text-shadow 0.35s ease;
+    }
+    @media(hover:hover) {
+      .mon-c:hover .mon-icon i {
+        color: #c9a84c;
+        text-shadow: 0 0 18px rgba(201,168,76,0.5);
+      }
+    }
+    .h-cols {
+      position:absolute; bottom:0; left:0; right:0; height:40%;
+      opacity:0.05; pointer-events:none;
+      background-image: repeating-linear-gradient(
+        90deg, transparent, transparent 80px,
+        rgba(201,168,76,1) 80px, rgba(201,168,76,1) 82px
+      );
+      mask-image: linear-gradient(to top, black, transparent);
+      -webkit-mask-image: linear-gradient(to top, black, transparent);
+    }
+
+    /* Título com clamp() — funciona em qualquer tela */
+    .h-name {
+      font-family:'Cinzel',serif; font-weight:900;
+      line-height:0.88; letter-spacing:-0.02em; display:block;
+      font-size: clamp(3rem, 13vw, 9.5rem);
+    }
+    .h-sub {
+      font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      color:rgba(240,236,228,0.48); line-height:1.65;
+      max-width: clamp(280px, 80vw, 640px);
+    }
+    .h-badge {
+      font-family:'JetBrains Mono',monospace;
+      font-size: clamp(0.5rem, 1.4vw, 0.65rem);
+      letter-spacing:0.2em; color:#c9a84c;
+      border:1px solid rgba(201,168,76,0.28);
+      padding:0.3rem 0.85rem; border-radius:2px; text-transform:uppercase; white-space:nowrap;
+    }
+
+    /* CTA group — coluna no mobile, linha no desktop */
+    .cta-g {
+      display:flex; flex-direction:column; gap:0.75rem; width:100%; max-width:300px;
+    }
+    @media(min-width:480px){ .cta-g { flex-direction:row; max-width:none; width:auto; } }
+
+    /* Scroll hint */
+    .s-hint {
+      position:absolute; bottom:1.75rem; left:50%; transform:translateX(-50%);
+      opacity:0.32; display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+    }
+    .s-pill {
+      width:20px; height:33px; border:1px solid rgba(201,168,76,0.4);
+      border-radius:10px; display:flex; justify-content:center; padding-top:6px;
+    }
+    .s-dot {
+      width:3px; height:7px; background:#c9a84c; border-radius:2px;
+      animation:sBounce 1.9s ease-in-out infinite;
+    }
+    @keyframes sBounce { 0%,100%{transform:translateY(0);opacity:1} 60%{transform:translateY(9px);opacity:0.15} }
+
+    /* ═══ SEÇÕES ═══ */
+    .sec { padding: clamp(4rem,10vw,7rem) clamp(1.25rem,5vw,2rem); position:relative; z-index:1; }
+    .con { max-width:1100px; margin:0 auto; width:100%; }
+
+    /* ═══ REVEAL ═══ */
+    .rev {
+      opacity:0; transform:translateY(26px);
+      transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16,1,0.3,1);
+    }
+    .rev.vis { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.22s}
+    .d3{transition-delay:.34s} .d4{transition-delay:.46s}
+
+    /* ═══ TIPOGRAFIA GERAL ═══ */
+    .sec-title {
+      font-family:'Cinzel',serif; font-weight:700;
+      font-size: clamp(1.7rem, 4.5vw, 2.8rem);
+      color:rgba(240,236,228,0.92); line-height:1.15;
+    }
+    .sec-label {
+      font-family:'Cinzel',serif; font-size:0.62rem;
+      letter-spacing:0.22em; color:rgba(201,168,76,0.58); text-transform:uppercase;
+    }
+    .sec-sub {
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      color:rgba(240,236,228,0.42); font-size: clamp(1rem,1.8vw,1.15rem);
+    }
+
+    /* ═══ SOBRE — grid ═══ */
+    .about-g {
+      display:grid; grid-template-columns:1fr; gap:2.5rem;
+    }
+    @media(min-width:768px){
+      .about-g { grid-template-columns:1fr 1fr; gap:3.5rem; align-items:start; }
+    }
+    @media(min-width:1024px){
+      .about-g { grid-template-columns:1.1fr 0.9fr; gap:5rem; }
+    }
+
+    .narr {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(1rem,1.8vw,1.12rem);
+      color:rgba(240,236,228,0.56); line-height:1.85;
+    }
+    .narr strong { color:rgba(240,236,228,0.8); font-weight:600; }
+    .narr em { color:rgba(201,168,76,0.72); }
+    .quote {
+      border-left:2px solid rgba(201,168,76,0.28); padding-left:1.15rem;
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size: clamp(1rem,1.8vw,1.1rem);
+      color:rgba(240,236,228,0.72); line-height:1.7;
+    }
+
+    .stats-g { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
+    .stat-c {
+      background:rgba(20,17,14,0.75); border:1px solid rgba(201,168,76,0.16);
+      border-radius:2px; padding:clamp(0.75rem,3vw,1.1rem); text-align:center;
+    }
+    .stat-n {
+      font-family:'Cinzel',serif; font-weight:900;
+      font-size: clamp(1.75rem,4.5vw,2.4rem); color:#c9a84c; line-height:1;
+    }
+    .stat-l {
+      font-family:'JetBrains Mono',monospace; font-size:0.52rem;
+      letter-spacing:0.16em; color:rgba(240,236,228,0.3);
+      margin-top:0.3rem; text-transform:uppercase;
+    }
+    .int-item {
+      display:flex; align-items:flex-start; gap:0.7rem;
+      padding:0.55rem 0; border-bottom:1px solid rgba(201,168,76,0.07);
+    }
+    .int-item:last-child { border-bottom:none; }
+    .int-dot {
+      width:5px; height:5px; background:rgba(201,168,76,0.45);
+      border-radius:50%; flex-shrink:0; margin-top:0.45rem;
+    }
+
+    /* ═══ MONUMENTOS — grid ═══ */
+    .mon-g { display:grid; grid-template-columns:1fr; gap:1.1rem; }
+    @media(min-width:600px){ .mon-g { grid-template-columns:1fr 1fr; } }
+    @media(min-width:1024px){ .mon-g { gap:1.35rem; } }
+
+    .mon-c {
+      position:relative; overflow:hidden; border-radius:2px;
+      background:rgba(16,14,11,0.78); border:1px solid rgba(201,168,76,0.16);
+      padding: clamp(1.1rem,4vw,1.65rem);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .mon-c::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+      opacity:0; transition:opacity 0.4s;
+    }
+    @media(hover:hover){
+      .mon-c:hover { transform:translateY(-5px); border-color:rgba(201,168,76,0.32);
+        box-shadow:0 20px 48px rgba(0,0,0,0.5), 0 0 28px rgba(201,168,76,0.09); }
+      .mon-c:hover::before { opacity:1; }
+    }
+    .mon-c:active { transform:scale(0.99); }
+    .mon-num {
+      font-family:'Cinzel',serif; font-weight:900;
+      font-size: clamp(2.5rem,7vw,4rem);
+      color:rgba(201,168,76,0.06); line-height:1;
+      position:absolute; top:0.65rem; right:0.9rem;
+      user-select:none; pointer-events:none;
+    }
+    .mon-icon {
+      width:34px; height:34px; flex-shrink:0;
+      border:1px solid rgba(201,168,76,0.22); border-radius:2px;
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(201,168,76,0.65); font-size:0.85rem;
+    }
+    .mon-cat {
+      font-family:'JetBrains Mono',monospace; font-size:0.55rem;
+      letter-spacing:0.14em; color:rgba(201,168,76,0.48); text-transform:uppercase;
+      margin-bottom:0.3rem;
+    }
+    .mon-title {
+      font-family:'Cinzel',serif; font-weight:700;
+      font-size: clamp(0.88rem,2.2vw,1.05rem);
+      color:rgba(240,236,228,0.9); line-height:1.3;
+    }
+    .mon-body {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(0.92rem,1.8vw,1.02rem);
+      color:rgba(240,236,228,0.5); line-height:1.72; margin:0.9rem 0;
+    }
+    .mon-body strong { color:rgba(240,236,228,0.77); font-weight:600; }
+    .mon-body em { color:rgba(201,168,76,0.62); }
+    .tags { display:flex; flex-wrap:wrap; gap:0.38rem; }
+    .tag {
+      font-family:'JetBrains Mono',monospace; font-size:0.55rem;
+      letter-spacing:0.1em; padding:0.18rem 0.5rem;
+      border:1px solid rgba(201,168,76,0.2);
+      color:rgba(201,168,76,0.62); border-radius:2px; text-transform:uppercase;
+    }
+    .mon-wip { opacity:0.42; }
+
+    /* ═══ ARSENAL ═══ */
+    .ars-g { display:grid; grid-template-columns:1fr; gap:1.1rem; }
+    @media(min-width:768px){ .ars-g { grid-template-columns:1fr 1fr; gap:1.35rem; } }
+
+    .sk-label { font-family:'Cormorant Garamond',serif; font-size:clamp(0.92rem,1.8vw,1.05rem); color:rgba(240,236,228,0.68); }
+    .sk-pct   { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:rgba(201,168,76,0.48); }
+    .sk-track { height:2px; background:rgba(201,168,76,0.08); border-radius:1px; overflow:hidden; }
+    .sk-fill  {
+      height:100%; width:0;
+      background: linear-gradient(90deg, #8a6f2e, #c9a84c);
+      border-radius:1px; transition: width 1.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .virt-g { display:grid; grid-template-columns:repeat(2,1fr); gap:0.55rem; }
+    @media(min-width:480px){ .virt-g { grid-template-columns:repeat(3,1fr); } }
+    @media(min-width:1024px){ .virt-g { grid-template-columns:repeat(2,1fr); } }
+    .virt-p {
+      background:rgba(240,236,228,0.03); border:1px solid rgba(201,168,76,0.13);
+      border-radius:2px; padding:0.5rem 0.6rem; text-align:center;
+      font-family:'Cormorant Garamond',serif; font-style:italic;
+      font-size:clamp(0.82rem,1.8vw,0.92rem); color:rgba(240,236,228,0.48);
+    }
+
+    /* ═══ BOTÕES ═══ */
+    .btn-p, .btn-g {
+      font-family:'Cinzel',serif;
+      font-size: clamp(0.6rem,1.6vw,0.7rem);
+      letter-spacing:0.2em; text-transform:uppercase; font-weight:700;
+      padding: clamp(0.85rem,2.5vw,1rem) clamp(1.4rem,3vw,1.75rem);
+      cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+      text-decoration:none; white-space:nowrap; min-height:48px;
+      transition: all 0.3s ease;
+    }
+    .btn-p {
+      background: linear-gradient(135deg,#c9a84c,#8a6f2e); color:#0a0908; border:none;
+      clip-path: polygon(7px 0%,100% 0%,calc(100% - 7px) 100%,0% 100%);
+    }
+    .btn-g {
+      background:transparent; color:#c9a84c;
+      border:1px solid rgba(201,168,76,0.38);
+      clip-path: polygon(7px 0%,100% 0%,calc(100% - 7px) 100%,0% 100%);
+    }
+    @media(hover:hover){
+      .btn-p:hover { transform:translateY(-2px); box-shadow:0 8px 26px rgba(201,168,76,0.28); }
+      .btn-g:hover { background:rgba(201,168,76,0.08); border-color:#c9a84c; }
+    }
+    .btn-p:active,.btn-g:active { transform:scale(0.98); }
+
+    /* ═══ CONTATO ═══ */
+    .ct-links { display:grid; grid-template-columns:1fr; gap:0.7rem; }
+    @media(min-width:480px){ .ct-links { grid-template-columns:1fr 1fr; } }
+    .ct-link {
+      display:flex; align-items:center; gap:0.8rem; padding:0.9rem 1rem;
+      text-decoration:none; background:rgba(16,14,11,0.72);
+      border:1px solid rgba(201,168,76,0.16); border-radius:2px;
+      transition:all 0.3s; min-height:54px;
+    }
+    .ct-icon { color:rgba(201,168,76,0.5); font-size:0.9rem; flex-shrink:0; transition:color 0.3s; }
+    .ct-txt {
+      font-family:'JetBrains Mono',monospace;
+      font-size: clamp(0.58rem,1.6vw,0.68rem);
+      color:rgba(240,236,228,0.5); transition:color 0.3s; word-break:break-all;
+    }
+    @media(hover:hover){
+      .ct-link:hover { border-color:rgba(201,168,76,0.4); }
+      .ct-link:hover .ct-icon { color:#c9a84c; }
+      .ct-link:hover .ct-txt  { color:rgba(240,236,228,0.88); }
+    }
+
+    /* Form */
+    .f-card {
+      background:rgba(16,14,11,0.82); border:1px solid rgba(201,168,76,0.16);
+      border-radius:2px; padding: clamp(1.25rem,5vw,2rem);
+    }
+    .f-label {
+      font-family:'JetBrains Mono',monospace; font-size:0.58rem;
+      letter-spacing:0.18em; color:rgba(240,236,228,0.32);
+      display:block; margin-bottom:0.45rem; text-transform:uppercase;
+    }
+    .f-input {
+      width:100%; background:rgba(10,9,8,0.85);
+      border:1px solid rgba(201,168,76,0.17);
+      color:#f0ece4; font-family:'Cormorant Garamond',serif;
+      /* 16px evita zoom automático no iOS */
+      font-size: max(1rem, 16px);
+      padding:0.8rem 1rem; outline:none;
+      transition:border-color 0.3s; border-radius:2px;
+    }
+    .f-input:focus { border-color:rgba(201,168,76,0.52); }
+    .f-input::placeholder { color:rgba(240,236,228,0.18); font-style:italic; }
+    textarea.f-input { resize:vertical; min-height:108px; }
+
+    /* ═══ CURSOR (só desktop) ═══ */
+    @media(hover:hover) and (pointer:fine){ body { cursor:none; } }
+    #cur,#cring { pointer-events:none; position:fixed; z-index:9999; border-radius:50%; }
+    #cur  { width:7px; height:7px; background:#c9a84c; transform:translate(-50%,-50%); transition:transform 0.12s, width 0.2s, height 0.2s; }
+    #cring{ width:26px; height:26px; border:1px solid rgba(201,168,76,0.38); transform:translate(-50%,-50%); transition:transform 0.32s, width 0.25s, height 0.25s; }
+
+    /* ═══ TOAST ═══ */
+    #toast {
+      position:fixed; bottom:1.5rem; right:1.5rem; z-index:200;
+      font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.05em;
+      padding:0.68rem 1.1rem; background:rgba(14,12,10,0.97);
+      border:1px solid rgba(201,168,76,0.3); border-radius:2px; color:#c9a84c;
+      opacity:0; transform:translateY(8px); transition:all 0.35s; pointer-events:none;
+      max-width:calc(100vw - 3rem);
+    }
+    #toast.show { opacity:1; transform:translateY(0); }
+
+    /* ═══ FLOAT ═══ */
+    .float { animation: flt 5s ease-in-out infinite; }
+    @keyframes flt { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-9px)} }
+
+    /* ═══ FOOTER ═══ */
+    footer { border-top:1px solid rgba(201,168,76,0.1); padding:2.5rem 1.5rem; text-align:center; position:relative; z-index:1; }
+  </style>
+  <!-- Font Awesome — ícones vetoriais -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<div class="bg-atm" aria-hidden="true"></div>
+<div id="cur" aria-hidden="true"></div>
+<div id="cring" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <div class="nav-wrap">
+    <a href="#hero" class="nav-logo gold-text">OLIMPO<span style="color:rgba(240,236,228,0.28);margin:0 0.4em">·</span>DIGITAL</a>
+
+    <div class="nav-desktop">
+      <a href="#sobre"      class="nav-a">Sobre</a>
+      <a href="#monumentos" class="nav-a">Monumentos</a>
+      <a href="#arsenal"    class="nav-a">Arsenal</a>
+      <a href="#contato"    class="nav-a">Contato</a>
+      <div style="display:flex;gap:0.9rem;align-items:center;margin-left:0.5rem;padding-left:1rem;border-left:1px solid rgba(201,168,76,0.15)">
+        <a href="https://www.linkedin.com/in/vinícios-silva-661579260" target="_blank" rel="noopener noreferrer"
+           style="color:rgba(201,168,76,0.4);font-size:0.9rem;transition:color 0.3s;text-decoration:none"
+           onmouseover="this.style.color='#0a66c2'" onmouseout="this.style.color='rgba(201,168,76,0.4)'"
+           title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/proteumetamorfo-blip" target="_blank" rel="noopener noreferrer"
+           style="color:rgba(201,168,76,0.4);font-size:0.9rem;transition:color 0.3s;text-decoration:none"
+           onmouseover="this.style.color='rgba(240,236,228,0.8)'" onmouseout="this.style.color='rgba(201,168,76,0.4)'"
+           title="GitHub"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+
+    <button class="hbg" id="hbtn" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div id="mmenu">
+    <a href="#sobre">Sobre</a>
+    <a href="#monumentos">Monumentos</a>
+    <a href="#arsenal">Arsenal</a>
+    <a href="#contato">Contato</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="h-cols" aria-hidden="true"></div>
+
+  <div class="rev" style="margin-bottom:clamp(1.25rem,4vw,2rem)">
+    <div style="display:flex;align-items:center;gap:0.75rem;justify-content:center">
+      <div style="width:clamp(1rem,4vw,2rem);height:1px;background:rgba(201,168,76,0.35)"></div>
+      <span class="h-badge">Goiana · Pernambuco · Brasil</span>
+      <div style="width:clamp(1rem,4vw,2rem);height:1px;background:rgba(201,168,76,0.35)"></div>
+    </div>
+  </div>
+
+  <div class="rev d1">
+    <h1>
+      <span class="h-name gold-text">VINÍCIOS</span>
+      <span class="h-name" style="color:rgba(240,236,228,0.88);margin-top:-0.06em">SILVA</span>
+    </h1>
+  </div>
+
+  <div class="rev d2" style="margin-top:clamp(0.9rem,3vw,1.75rem);padding:0 0.5rem">
+    <p class="text-xl md:text-2xl font-light text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] max-w-2xl mx-auto rev opacity-0 tracking-wide font-serif">
+      Técnico em <em style="-webkit-text-fill-color:rgba(201,168,76,0.9);color:rgba(201,168,76,0.9)">Redes de Computadores</em>
+      com foco em <em style="-webkit-text-fill-color:rgba(201,168,76,0.9);color:rgba(201,168,76,0.9)">automação, dados e segurança digital</em>
+    </p>
+  </div>
+
+  <div class="rev d3" style="margin-top:clamp(0.85rem,2.5vw,1.35rem)">
+    <span class="h-badge" style="font-size:clamp(0.48rem,1.3vw,0.62rem)">&lt; Tecnologia · Automação · Dados · Segurança &gt;</span>
+  </div>
+
+  <div class="rev d4" style="margin-top:clamp(1.25rem,4vw,2.25rem)">
+    <div class="cta-g">
+      <a href="#monumentos" class="btn-p" style="flex:1;text-align:center">Ver Monumentos</a>
+      <a href="#contato"    class="btn-g" style="flex:1;text-align:center">Contato</a>
+    </div>
+  </div>
+
+  <div class="s-hint float" aria-hidden="true">
+    <div class="s-pill"><div class="s-dot"></div></div>
+  </div>
+</section>
+
+<!-- ══ SOBRE ══ -->
+<section id="sobre" class="sec">
+  <div class="con">
+    <div class="divider rev" style="margin-bottom:2rem">
+      <span class="sec-label">I · Trajetória</span>
+    </div>
+    <div class="about-g">
+      <!-- Narrativa -->
+      <div>
+        <div class="rev">
+          <h2 class="sec-title" style="margin-bottom:1.35rem">
+            Do Técnico<br><span class="gold-text">ao Desenvolvedor</span>
+          </h2>
+        </div>
+        <div class="rev d1" style="display:flex;flex-direction:column;gap:1.1rem">
+          <p class="narr">Em <strong>Goiana, Pernambuco</strong>, iniciei minha trajetória profissional na área de tecnologia. Minha formação em Redes de Computadores despertou meu interesse por infraestrutura, automação, dados e segurança digital.</p>
+          <p class="narr"><strong>Minha primeira experiência foi na Denso</strong>, fábrica de sistemas térmicos, onde atuei como mantenedor de sistemas automatizados. Trabalhei com ordens de serviço em <em>Excel e Power BI</em>, análise preditiva de equipamentos e organização da infraestrutura industrial. Foi nessa etapa que passei a enxergar os dados como uma ferramenta essencial para acompanhar processos, identificar padrões e apoiar decisões.</p>
+          <p class="narr"><strong>Minha segunda experiência foi na Secretaria de Educação e Inovação de Goiana</strong>, onde fui designado para atuar como reforço administrativo no <strong>colégio público EMAF</strong>. Em um cenário com ausência de secretário e vice-diretor, passei a apoiar diretamente a gestão e a rotina administrativa da escola.</p>
+          <p class="narr">Nesse período, desenvolvi uma das minhas principais soluções: um <em>assistente virtual no WhatsApp</em> para automatizar o atendimento a pais, alunos e convidados. A iniciativa ajudou a reduzir filas, organizar a comunicação e tornar o atendimento mais ágil.</p>
+          <p class="narr">Também assumi a <strong>organização dos arquivos escolares</strong>, do ensino fundamental ao ensino médio, além do recebimento, controle e distribuição de materiais pedagógicos, incluindo <strong>notebooks para professores e tablets para alunos</strong>.</p>
+          <p class="narr">Ao longo dessas experiências, desenvolvi uma combinação de <strong>conhecimento técnico, organização, autonomia, capacidade de adaptação e resolução de problemas</strong>. Aprendi a entender uma necessidade, estruturar o problema e buscar uma solução prática.</p>
+          <div class="quote rev d2">"Tecnologia, para mim, é transformar problemas reais em soluções úteis."</div>
+        </div>
+      </div>
+      <!-- Stats + Interesses -->
+      <div>
+        <div class="stats-g rev d1" style="margin-bottom:0.75rem">
+          <div class="stat-c"><div class="stat-n">24</div><div class="stat-l">Anos de Idade</div></div>
+          <div class="stat-c"><div class="stat-n">2+</div><div class="stat-l">Anos de Experiência.</div></div>
+          <div class="stat-c"><div class="stat-n">3</div><div class="stat-l">Projetos Criados</div></div>
+        </div>
+        <div class="glass rev d2" style="border-radius:2px;padding:clamp(1rem,3vw,1.35rem)">
+          <div class="sec-label" style="margin-bottom:0.5rem">Formação & Competências</div>
+          <div id="ints-tech"></div>
+          <div class="sec-label" style="margin-bottom:0.5rem;margin-top:1rem">Interesses Pessoais</div>
+          <div id="ints-hobby"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MONUMENTOS ══ -->
+<section id="monumentos" class="sec">
+  <div class="con">
+    <div class="divider rev" style="margin-bottom:2rem">
+      <span class="sec-label">II · Projetos</span>
+    </div>
+    <div class="rev" style="text-align:center;margin-bottom:clamp(1.75rem,5vw,3rem)">
+      <h2 class="sec-title" style="margin-bottom:0.45rem">Projetos & Soluções</h2>
+      <p class="sec-sub">Projetos que mostram como transformo necessidades em soluções.</p>
+    </div>
+    <div class="mon-g">
+      <!-- I -->
+      <div class="mon-c rev d1">
+        <div class="mon-num" aria-hidden="true">I</div>
+        <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.9rem">
+          <div class="mon-icon" aria-hidden="true"><i class="fas fa-comments"></i></div>
+          <div><div class="mon-cat">Automação de Atendimento</div><h3 class="mon-title">Assistente Virtual para Atendimento Educacional</h3></div>
+        </div>
+        <p class="mon-body"><strong>Desafio:</strong> Filas presenciais e alto volume de mensagens, com pais aguardando atendimento.<br><br><strong>Solução:</strong> Assistente virtual para respostas frequentes, como matrículas, documentos e horários, integrado ao fluxo de atendimento presencial. <em>Automação sem custo operacional adicional.</em></p>
+        <div class="tags" id="t1"></div>
+      </div>
+      <!-- II -->
+      <div class="mon-c rev d2">
+        <div class="mon-num" aria-hidden="true">II</div>
+        <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.9rem">
+          <div class="mon-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></div>
+          <div><div class="mon-cat">Dados & Manutenção Industrial</div><h3 class="mon-title">Dashboard de Ordens de Serviço — Denso</h3></div>
+        </div>
+        <p class="mon-body"><strong>Desafio:</strong> Acompanhar ciclos de manutenção de equipamentos automatizados e manter os registros organizados.<br><br><strong>Solução:</strong> Ordens de serviço em Excel integradas ao Power BI, com checklists preventivos utilizados como base para <em>análise preditiva de falhas.</em></p>
+        <div class="tags" id="t2"></div>
+      </div>
+      <!-- III -->
+      <div class="mon-c rev d3">
+        <div class="mon-num" aria-hidden="true">III</div>
+        <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.9rem">
+          <div class="mon-icon" aria-hidden="true"><i class="fas fa-mobile-alt"></i></div>
+          <div><div class="mon-cat">Desenvolvimento Web · Projeto Atual</div><h3 class="mon-title">Olimpo Digital — Portfólio Profissional</h3></div>
+        </div>
+        <p class="mon-body"><strong>Objetivo:</strong> Construir um portfólio responsivo com identidade própria e foco em tecnologia.<br><br><strong>Solução:</strong> Aplicação web com Tailwind CSS, JavaScript, CSP, sanitização de entradas e práticas de segurança desde a concepção. <em>Desenvolvimento mobile-first.</em></p>
+        <div class="tags" id="t3"></div>
+      </div>
+      <!-- IV -->
+      <div class="mon-c rev d4">
+        <div class="mon-num" aria-hidden="true">IV</div>
+        <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.9rem">
+          <div class="mon-icon" aria-hidden="true"><i class="fas fa-shield-alt"></i></div>
+          <div><div class="mon-cat">Cibersegurança · Python · PoC</div><h3 class="mon-title">Olimpo Engine — IDS de Nível de Aplicação</h3></div>
+        </div>
+        <p class="mon-body"><strong>Objetivo:</strong> Criar uma camada de detecção capaz de identificar comportamentos suspeitos em nível de aplicação.<br><br><strong>Solução:</strong> Motor IDS em Python com pipeline ETL, rate limiting por <em>sliding window</em> e regras para detecção de força bruta, path traversal, route scanner e user-agents maliciosos. <em>Projeto desenvolvido via Android + Termux.</em></p>
+        <div class="tags" id="t4"></div>
+        <a href="https://github.com/proteumetamorfo-blip/olimpo-engine-V2" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:rgba(201,168,76,0.7);text-decoration:none;border:1px solid rgba(201,168,76,0.2);padding:0.35rem 0.75rem;border-radius:2px;transition:all 0.3s" onmouseover="this.style.color='#c9a84c';this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.color='rgba(201,168,76,0.7)';this.style.borderColor='rgba(201,168,76,0.2)'">
+          <i class="fab fa-github"></i> Ver no GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARSENAL ══ -->
+<section id="arsenal" class="sec">
+  <div class="con">
+    <div class="divider rev" style="margin-bottom:2rem">
+      <span class="sec-label">III · Competências</span>
+    </div>
+    <div class="rev" style="text-align:center;margin-bottom:clamp(1.75rem,5vw,3rem)">
+      <h2 class="sec-title" style="margin-bottom:0.45rem">Competências Técnicas</h2>
+      <p class="sec-sub">Conhecimentos desenvolvidos na prática e aplicados a projetos reais.</p>
+    </div>
+    <div class="ars-g">
+      <div class="rev d1">
+        <div class="glass" style="border-radius:2px;padding:clamp(1.1rem,3vw,1.65rem)">
+          <div class="sec-label" style="margin-bottom:1.1rem">Automação & Dados</div>
+          <div id="sc1" style="display:flex;flex-direction:column;gap:1.15rem"></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.1rem">
+        <div class="rev d2">
+          <div class="glass" style="border-radius:2px;padding:clamp(1.1rem,3vw,1.65rem)">
+            <div class="sec-label" style="margin-bottom:1.1rem">Tecnologia & Infraestrutura</div>
+            <div id="sc2" style="display:flex;flex-direction:column;gap:1.15rem"></div>
+          </div>
+        </div>
+        <div class="rev d3">
+          <div class="glass" style="border-radius:2px;padding:clamp(1.1rem,3vw,1.65rem)">
+            <div class="sec-label" style="margin-bottom:0.9rem">Competências Comportamentais</div>
+            <div class="virt-g" id="virts"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTATO ══ -->
+<section id="contato" class="sec">
+  <div class="con" style="max-width:680px">
+    <div class="divider rev" style="margin-bottom:2rem">
+      <span class="sec-label">IV · Contato</span>
+    </div>
+    <div class="rev" style="text-align:center;margin-bottom:clamp(1.35rem,4vw,2.25rem)">
+      <h2 class="sec-title" style="margin-bottom:0.45rem">Vamos conversar</h2>
+      <p class="sec-sub">Estou aberto a oportunidades, projetos e conexões profissionais.</p>
+    </div>
+    <!-- Ícones de contato direto -->
+    <div class="rev d1" style="display:flex;gap:0.75rem;justify-content:center;margin-bottom:1.5rem">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/5581994708853" target="_blank" rel="noopener noreferrer"
+         style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+                padding:1rem 1.75rem;text-decoration:none;
+                background:rgba(16,14,11,0.72);border:1px solid rgba(201,168,76,0.18);
+                border-radius:2px;transition:all 0.3s;flex:1;max-width:160px"
+         onmouseover="this.style.borderColor='rgba(37,211,102,0.5)';this.querySelector('i').style.color='#25d366'"
+         onmouseout="this.style.borderColor='rgba(201,168,76,0.18)';this.querySelector('i').style.color='rgba(201,168,76,0.55)'">
+        <i class="fab fa-whatsapp" style="font-size:1.6rem;color:rgba(201,168,76,0.55);transition:color 0.3s"></i>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:rgba(240,236,228,0.45);text-transform:uppercase">WhatsApp</span>
+      </a>
+      <!-- E-mail -->
+      <a href="mailto:vinicios098silva@gmail.com" rel="noopener noreferrer"
+         style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+                padding:1rem 1.75rem;text-decoration:none;
+                background:rgba(16,14,11,0.72);border:1px solid rgba(201,168,76,0.18);
+                border-radius:2px;transition:all 0.3s;flex:1;max-width:160px"
+         onmouseover="this.style.borderColor='rgba(201,168,76,0.5)';this.querySelector('i').style.color='#c9a84c'"
+         onmouseout="this.style.borderColor='rgba(201,168,76,0.18)';this.querySelector('i').style.color='rgba(201,168,76,0.55)'">
+        <i class="fas fa-envelope" style="font-size:1.6rem;color:rgba(201,168,76,0.55);transition:color 0.3s"></i>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:rgba(240,236,228,0.45);text-transform:uppercase">E-mail</span>
+      </a>
+    </div>
+    <div class="f-card rev d2">
+      <div class="sec-label" style="margin-bottom:1.35rem">Envie uma mensagem pelo formulário abaixo.</div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div>
+          <label class="f-label" for="fn">Nome *</label>
+          <input id="fn" type="text" class="f-input" placeholder="Seu nome completo" maxlength="100" autocomplete="name"/>
+        </div>
+        <div>
+          <label class="f-label" for="fe">E-mail *</label>
+          <input id="fe" type="email" class="f-input" placeholder="seu@email.com" maxlength="200" autocomplete="email"/>
+        </div>
+        <div>
+          <label class="f-label" for="fm">Mensagem *</label>
+          <textarea id="fm" class="f-input" rows="4" placeholder="Como posso ajudar?" maxlength="2000"></textarea>
+        </div>
+        <!-- Honeypot -->
+        <div style="position:absolute;left:-9999px" aria-hidden="true">
+          <input id="hp" type="text" name="website" tabindex="-1" autocomplete="off"/>
+        </div>
+        <button class="btn-p" id="submit-btn" style="width:100%;clip-path:polygon(7px 0%,100% 0%,calc(100% - 7px) 100%,0% 100%)">
+          Enviar ao Olimpo
+        </button>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.56rem;color:rgba(240,236,228,0.18);text-align:center">
+          // Seus dados são utilizados apenas para o envio da mensagem e não são armazenados pelo portfólio.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.22em;color:rgba(201,168,76,0.38);margin-bottom:0.75rem">OLIMPO DIGITAL</div>
+
+  <!-- Links sociais -->
+  <div style="display:flex;gap:1.25rem;justify-content:center;margin-bottom:1rem">
+    <a href="https://www.linkedin.com/in/vinícios-silva-661579260" target="_blank" rel="noopener noreferrer"
+       style="color:rgba(201,168,76,0.4);font-size:1.2rem;transition:color 0.3s;text-decoration:none"
+       onmouseover="this.style.color='#0a66c2'" onmouseout="this.style.color='rgba(201,168,76,0.4)'"
+       title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://github.com/proteumetamorfo-blip" target="_blank" rel="noopener noreferrer"
+       style="color:rgba(201,168,76,0.4);font-size:1.2rem;transition:color 0.3s;text-decoration:none"
+       onmouseover="this.style.color='rgba(240,236,228,0.8)'" onmouseout="this.style.color='rgba(201,168,76,0.4)'"
+       title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://wa.me/5581994708853" target="_blank" rel="noopener noreferrer"
+       style="color:rgba(201,168,76,0.4);font-size:1.2rem;transition:color 0.3s;text-decoration:none"
+       onmouseover="this.style.color='#25d366'" onmouseout="this.style.color='rgba(201,168,76,0.4)'"
+       title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="mailto:vinicios098silva@gmail.com"
+       style="color:rgba(201,168,76,0.4);font-size:1.2rem;transition:color 0.3s;text-decoration:none"
+       onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='rgba(201,168,76,0.4)'"
+       title="E-mail">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(240,236,228,0.2);font-size:0.92rem">Vinícios Silva · Goiana, Pernambuco · Tecnologia & Inovação · 2026</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:0.56rem;color:rgba(240,236,228,0.1);margin-top:0.7rem">&lt;!-- Mobile-first · Segurança desde a concepção · Responsivo por necessidade --&gt;</p>
+</footer>
+
+<script>
+'use strict';
+
+/* ── Anti-XSS ── */
+const S = str => { const d = document.createElement('div'); d.textContent = String(str||''); return d.textContent; };
+
+/* ── Email validation (sem ReDoS) ── */
+const validEmail = e => { const p = e.split('@'); return p.length===2 && p[0].length>0 && p[1].length>2 && p[1].includes('.'); };
+
+/* ── Toast ── */
+function toast(msg, ok=true) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = S(msg);
+  el.style.borderColor = ok ? 'rgba(201,168,76,0.3)' : 'rgba(180,40,40,0.5)';
+  el.style.color = ok ? '#c9a84c' : '#f0ece4';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+/* ── Dados de conteúdo ── */
+const D = {
+  interests_tech:  ['Redes de Computadores & Infraestrutura','Automação de Processos & Chatbots','Cibersegurança & Detecção de Intrusão','Análise de Dados & Business Intelligence'],
+  interests_hobby: ['História Antiga & Mitologia (Grega, Cananeia, Nórdica)','Teologia & Filosofia Clássica','Gnomônica & Astronomia Observacional'],
+  tags: {
+    t1: ['Chatbot','Automação','Gestão Pública','UX Conversacional'],
+    t2: ['Excel','Power BI','Manutenção Preditiva','Data Analysis'],
+    t3: ['HTML5','Tailwind CSS','Vanilla JS','Security-First','Mobile Dev'],
+    t4: ['Python','SQLite','IDS','ETL','Rate Limiting','Termux','Cibersegurança'],
+  },
+  sk1: [{n:'Microsoft Excel & Power BI',p:85},{n:'Automação de Processos',p:80},{n:'Chatbots & IA Conversacional',p:75},{n:'Análise e Gestão de Dados',p:78}],
+  sk2: [{n:'Redes de Computadores',p:82},{n:'HTML5 & CSS3',p:70},{n:'JavaScript (Vanilla)',p:65},{n:'Microsoft Office Suite',p:88}],
+  virtues: ['Proatividade','Resiliência','Pensamento Analítico','Resolução de Problemas','Inovação Digital'],
+};
+
+/* ── Renderiza interesses ── */
+function buildInts() {
+  function renderList(items, containerId) {
+    const c = document.getElementById(containerId); if (!c) return;
+    items.forEach(t => {
+      const w = document.createElement('div'); w.className = 'int-item';
+      const dot = document.createElement('div'); dot.className = 'int-dot'; dot.setAttribute('aria-hidden','true');
+      const span = document.createElement('span');
+      span.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:clamp(0.92rem,1.8vw,1.02rem);color:rgba(240,236,228,0.62)';
+      span.textContent = S(t);
+      w.appendChild(dot); w.appendChild(span); c.appendChild(w);
+    });
+  }
+  renderList(D.interests_tech,  'ints-tech');
+  renderList(D.interests_hobby, 'ints-hobby');
+}
+
+/* ── Renderiza tags ── */
+function buildTags() {
+  Object.entries(D.tags).forEach(([id, tags]) => {
+    const c = document.getElementById(id); if (!c) return;
+    tags.forEach(t => {
+      const s = document.createElement('span'); s.className = 'tag';
+      s.textContent = S(t); c.appendChild(s); // Anti-XSS
+    });
+  });
+}
+
+/* ── Renderiza skill bar ── */
+function buildSkill(container, sk) {
+  const w = document.createElement('div');
+  const h = document.createElement('div'); h.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:0.45rem';
+  const n = document.createElement('span'); n.className = 'sk-label'; n.textContent = S(sk.n);
+  const p = document.createElement('span'); p.className = 'sk-pct'; p.textContent = sk.p + '%';
+  h.appendChild(n); h.appendChild(p);
+  const tr = document.createElement('div'); tr.className = 'sk-track';
+  const fi = document.createElement('div'); fi.className = 'sk-fill'; fi.dataset.p = sk.p;
+  tr.appendChild(fi); w.appendChild(h); w.appendChild(tr); container.appendChild(w);
+}
+function buildSkills() {
+  const c1 = document.getElementById('sc1'), c2 = document.getElementById('sc2');
+  if (c1) D.sk1.forEach(s => buildSkill(c1,s));
+  if (c2) D.sk2.forEach(s => buildSkill(c2,s));
+}
+
+/* ── Renderiza virtudes ── */
+function buildVirtues() {
+  const g = document.getElementById('virts'); if (!g) return;
+  D.virtues.forEach(v => {
+    const el = document.createElement('div'); el.className = 'virt-p';
+    el.textContent = S(v); g.appendChild(el);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROTEÇÃO ANTI-DoS — FORMULÁRIO OLIMPO DIGITAL
+   Camadas empilhadas de defesa client-side.
+   Nota: segurança real de produção exige validação server-side.
+   Este código é a primeira linha de defesa no navegador.
+═══════════════════════════════════════════════════════════════ */
+
+// ── Credenciais EmailJS (chaves públicas por design) ──────────
+const _SID = "service_yfupqxl";
+const _TID = "template_q96ve6h";
+const _PK  = "8gC18hSm5uEVyytgV";
+
+// ── Camada 1: Chaves mascaradas no storage ────────────────────
+// Nomes não óbvios dificultam scripts automatizados que tentam
+// limpar o storage para burlar o rate limit.
+const _TS  = '_od_ts_ref_';  // timestamp do último envio bem-sucedido
+const _CNT = '_od_ct_ref_';  // contador de tentativas na sessão atual
+const _SIG = '_od_sg_ref_';  // assinatura de integridade da sessão
+
+// ── Camada 2: Constantes de limite ───────────────────────────
+const COOLDOWN  = 600_000; // 10 minutos entre envios bem-sucedidos (ms)
+const MAX_TRIES = 2;       // máximo 2 envios por sessão
+
+// ── Camada 3: Lock em memória (volátil) ──────────────────────
+// Impede disparos simultâneos via console (ex: loop com setInterval).
+// Ao contrário do storage, este flag não pode ser manipulado
+// sem recarregar a página — e ao recarregar, os limites são re-lidos.
+let _inflight = false;
+
+// ── Assinatura de sessão ─────────────────────────────────────
+// Token único por sessão. Se o sessionStorage for limpo manualmente
+// e os contadores resetados, a assinatura muda — detectável
+// por uma camada de monitoramento futura (ex: log no EmailJS).
+(function _initSig() {
+  try {
+    if (!sessionStorage.getItem(_SIG)) {
+      sessionStorage.setItem(_SIG,
+        Math.random().toString(36).slice(2) + Date.now().toString(36)
+      );
+    }
+  } catch (_) {}
+})();
+
+// ── Helpers de storage com try/catch ─────────────────────────
+// Navegadores em modo privado extremo podem bloquear o storage.
+function _lsGet(k)   { try { return localStorage.getItem(k);       } catch(_){return null;} }
+function _lsSet(k,v) { try { localStorage.setItem(k, String(v));   } catch(_){} }
+function _ssGet(k)   { try { return sessionStorage.getItem(k);     } catch(_){return null;} }
+function _ssSet(k,v) { try { sessionStorage.setItem(k, String(v)); } catch(_){} }
+
+// ── Camada 4: Rate limit por cooldown ────────────────────────
+function _isRateLimited() {
+  const raw = _lsGet(_TS);
+  if (!raw) return false;
+  const ts = parseInt(raw, 10);
+  // Valida que o valor é numérico — impede injeção de dados no storage
+  if (isNaN(ts) || ts > Date.now()) { _lsSet(_TS, '0'); return false; }
+  return (Date.now() - ts) < COOLDOWN;
+}
+
+// ── Camada 5: Limite de tentativas por sessão ─────────────────
+// Reinicia apenas quando a aba é fechada (sessionStorage).
+// Bloqueia ataques que tentam reenviar repetidamente após falhas.
+function _isSessionBlocked() {
+  const raw = _ssGet(_CNT);
+  if (!raw) return false;
+  return parseInt(raw, 10) >= MAX_TRIES;
+}
+
+// ── Tempo restante de cooldown ────────────────────────────────
+function _remaining() {
+  const ts = parseInt(_lsGet(_TS) || '0', 10);
+  if (!ts || isNaN(ts)) return '';
+  const s = Math.ceil((COOLDOWN - (Date.now() - ts)) / 1000);
+  if (s <= 0) return '';
+  return s >= 60 ? `${Math.ceil(s / 60)}min` : `${s}s`;
+}
+
+// ── Incrementa contador de tentativas ────────────────────────
+function _bumpTries() {
+  const n = parseInt(_ssGet(_CNT) || '0', 10);
+  _ssSet(_CNT, n + 1);
+}
+
+// ── Camada 6: Estado visual do botão ─────────────────────────
+// Feedback imediato + bloqueia novos cliques durante o envio.
+function _btnState(state, label) {
+  const btn = document.getElementById('submit-btn');
+  if (!btn) return;
+  const labels = { idle: 'Enviar ao Olimpo', loading: 'Enviando...', blocked: label || 'Aguarde...' };
+  btn.textContent         = labels[state] || labels.idle;
+  btn.style.opacity       = state === 'idle' ? '' : state === 'blocked' ? '0.35' : '0.6';
+  btn.style.pointerEvents = state === 'idle' ? '' : 'none';
+}
+
+/* ── initForm ─────────────────────────────────────────────── */
+function initForm() {
+  const btn = document.getElementById('submit-btn');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+
+    // ── HONEYPOT: campo invisível preenchido = bot ────────────
+    if (document.getElementById('hp')?.value) return;
+
+    // ── LOCK em memória: bloqueia disparos simultâneos ────────
+    // Cobre o caso de alguém chamar .click() em loop no console.
+    if (_inflight) return;
+
+    // ── RATE LIMIT: cooldown de 10 min após envio bem-sucedido ─
+    if (_isRateLimited()) {
+      const r = _remaining();
+      toast(`⏳ Aguarde ${r} antes de enviar novamente.`, false);
+      _btnState('blocked', `Aguarde ${r}`);
+      setTimeout(() => _btnState('idle'), 3500);
+      return;
+    }
+
+    // ── SESSÃO BLOQUEADA: excedeu tentativas ──────────────────
+    if (_isSessionBlocked()) {
+      toast('🚫 Limite de tentativas atingido nesta sessão.', false);
+      _btnState('blocked', 'Limite atingido');
+      return;
+    }
+
+    // ── SANITIZAÇÃO E VALIDAÇÃO ───────────────────────────────
+    const name  = S(document.getElementById('fn')?.value?.trim() || '');
+    const email = S(document.getElementById('fe')?.value?.trim() || '');
+    const msg   = S(document.getElementById('fm')?.value?.trim() || '');
+
+    if (name.length < 2)    return toast('⚠ Informe seu nome (mín. 2 caracteres).', false);
+    if (name.length > 100)  return toast('⚠ Nome muito longo.', false);
+    if (!validEmail(email)) return toast('⚠ E-mail inválido. Verifique o formato.', false);
+    if (msg.length < 10)    return toast('⚠ Mensagem muito curta (mín. 10 caracteres).', false);
+    if (msg.length > 2000)  return toast('⚠ Mensagem muito longa (máx. 2000 caracteres).', false);
+
+    // ── ATIVA LOCK + feedback visual ──────────────────────────
+    _inflight = true;
+    _bumpTries();
+    _btnState('loading');
+
+    // ── DISPARO EmailJS ───────────────────────────────────────
+    // IMPORTANTE: os nomes dos campos aqui (from_name, reply_to, message)
+    // precisam ser idênticos às variáveis do seu template no emailjs.com
+    // Ex: no template use {{from_name}}, {{reply_to}}, {{message}}
+    emailjs.send(_SID, _TID, {
+      from_name: name,
+      reply_to:  email,
+      message:   msg,
+      to_name:   'Vinícios',
+    }, _PK)
+    .then(() => {
+      // ── SUCESSO: grava timestamp do cooldown ─────────────
+      _lsSet(_TS, Date.now());
+      toast('✓ Mensagem enviada ao Olimpo com sucesso!');
+      document.getElementById('fn').value = '';
+      document.getElementById('fe').value = '';
+      document.getElementById('fm').value = '';
+      _btnState('blocked', 'Enviado ✓');
+      setTimeout(() => _btnState('idle'), COOLDOWN); // botão volta após 10 min
+    })
+    .catch(err => {
+      // Falha de rede — não grava cooldown, mas conta a tentativa
+      console.error('Erro no Oráculo:', err);
+      toast('✗ Falha no envio. Por favor, use o e-mail direto.', false);
+      _btnState('idle');
+    })
+    .finally(() => {
+      // Libera o lock em qualquer cenário
+      _inflight = false;
+    });
+  });
+}
+/* ═══════════════════════════════════════════════════════════ */
+
+/* ── Scroll Reveal ── */
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('vis');
+      e.target.querySelectorAll('.sk-fill[data-p]').forEach(b => {
+        setTimeout(() => { b.style.width = b.dataset.p + '%'; }, 200);
+      });
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+  document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+}
+
+/* ── Navbar ── */
+function initNav() {
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 45), { passive:true });
+}
+
+/* ── Menu mobile ── */
+function initMobile() {
+  const btn = document.getElementById('hbtn'), menu = document.getElementById('mmenu');
+  if (!btn||!menu) return;
+  btn.addEventListener('click', () => {
+    const o = menu.classList.toggle('open');
+    btn.classList.toggle('open', o);
+    btn.setAttribute('aria-expanded', String(o));
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('open'); btn.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }));
+}
+
+/* ── Cursor desktop ── */
+function initCursor() {
+  const isMouse = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const cur = document.getElementById('cur'), ring = document.getElementById('cring');
+  if (!cur||!ring) return;
+  if (!isMouse) { cur.style.display='none'; ring.style.display='none'; return; }
+  document.addEventListener('mousemove', e => {
+    cur.style.transform  = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+    ring.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+  }, { passive:true });
+  document.querySelectorAll('a,button,.mon-c').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.style.width='13px'; cur.style.height='13px'; cur.style.opacity='0.4'; ring.style.width='38px'; ring.style.height='38px'; });
+    el.addEventListener('mouseleave', () => { cur.style.width='7px';  cur.style.height='7px';  cur.style.opacity='1';   ring.style.width='26px'; ring.style.height='26px'; });
+  });
+}
+
+/* ── Hero entry ── */
+function initHero() {
+  document.querySelectorAll('#hero .rev').forEach((el,i) => {
+    setTimeout(() => el.classList.add('vis'), 180 + i*130);
+  });
+}
+
+/* ── Bootstrap ── */
+document.addEventListener('DOMContentLoaded', () => {
+  buildInts(); buildTags(); buildSkills(); buildVirtues();
+  initReveal(); initNav(); initMobile(); initCursor(); initHero(); initForm();
+});
+</script>
+</body>
+</html>
